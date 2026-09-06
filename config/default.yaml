@@ -1,0 +1,53 @@
+# ------------------------------------------------------------------
+# Federated Unlearning — central configuration (all knobs live here).
+# experiments/run_all_scoped.py loops over dataset: [pneumonia, path].
+# Numeric defaults are tuned for CPU-feasible runs on laptops.
+# ------------------------------------------------------------------
+
+# Dataset to use. "pneumonia" (binary, 5,856) or "path" (9-class, ~107k).
+# Leave "pneumonia" here for single runs; run_all_scoped.py overrides it.
+dataset: pneumonia
+
+# ---- Non-IID client simulation -------------------------------------
+alpha: 0.3              # Dirichlet concentration (lower = more skew)
+num_clients: 5
+removal_client_id: 0    # which client "leaves the federation" in this pass
+seed: 42
+device: cpu
+
+# ---- Data knobs ------------------------------------------------------
+data:
+  # CPU cap on training tuples allocated per client. PathMNIST has ~90k
+  # train tuples; feeding all of them through a frozen ResNet-18 on a
+  # laptop CPU is impractical, so we cap each client's training set.
+  # Set to null to disable (use only if you have GPU / time).
+  path_train_cap_per_client: 3000
+  local_val_fraction: 0.2   # per-client split: kept out of training
+                            # (used as MIA "never-trained" non-members)
+
+# ---- FedAvg baseline ------------------------------------------------
+fedavg:
+  num_rounds: 30
+  local_epochs: 3
+  clients_per_round: 5      # all clients each round (N is small)
+  batch_size: 64
+  optimizer: adam
+  lr: 0.001
+
+# ---- Unlearning methods ----------------------------------------------
+finetune:
+  extra_rounds: 8           # continue FedAvg on the N-1 retained clients
+
+head_only_kaf:
+  prior_weight: 1.0         # weight of ||head - head_baseline||^2  (utility anchor)
+  forget_weight: 1.5        # weight of the forgetting (loss ascent) term
+  epochs: 8                 # head-only KAF optimisation steps
+  lr: 0.0005
+  stabilize_rounds: 3       # post-KAF FedAvg rounds on retained clients
+                            # (restores utility eroded by the forget term)
+
+# ---- Evaluation -------------------------------------------------------
+mia:
+  test_fraction: 0.3        # MIA attacker held-out split
+eval:
+  log_every: 5              # rounds between global-test evaluations

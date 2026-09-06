@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# MedMNIST download cache
+.medmnist/
+
+# Feature cache (regenerable from raw data — do not commit)
+.cache/
+
+# Checkpoints & run state
+*.pt
+*.pth
+*.npz
+
+# Notebook cruft
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+
+# Results are deliberately tracked (CSVs + PNGs are deliverables).
+# Large intermediates are not.
