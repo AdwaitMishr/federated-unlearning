@@ -1,100 +1,0 @@
-
-===== PNEUMONIA : 5 clients, alpha=0.3, cap/client=None, remove client 0 =====
-[baseline] training FedAvg ...
-[pneumonia] 1: {'mean_local_loss': 0.5010654330253601}
-[pneumonia] 2: {'mean_local_loss': 1.4444710731506347}
-[pneumonia] 3: {'mean_local_loss': 0.40206902027130126}
-[pneumonia] 4: {'mean_local_loss': 0.6560452938079834}
-[pneumonia] eval: {'ce': 30.7897, 'acc': 0.625}
-[pneumonia] 5: {'mean_local_loss': 0.2996038317680359, 'ce': 30.789730072021484, 'acc': 0.625}
-[pneumonia] 6: {'mean_local_loss': 0.20756591558456422}
-[pneumonia] 7: {'mean_local_loss': 0.32504072189331057}
-[pneumonia] 8: {'mean_local_loss': 0.18511514663696288}
-[pneumonia] 9: {'mean_local_loss': 0.2017711341381073}
-[pneumonia] eval: {'ce': 15.1561, 'acc': 0.625}
-[pneumonia] 10: {'mean_local_loss': 0.23623635172843932, 'ce': 15.156091690063477, 'acc': 0.625}
-[pneumonia] 11: {'mean_local_loss': 0.27296392917633056}
-[pneumonia] 12: {'mean_local_loss': 0.31369307041168215}
-[pneumonia] 13: {'mean_local_loss': 0.3292444944381714}
-[pneumonia] 14: {'mean_local_loss': 0.4702011227607727}
-[pneumonia] eval: {'ce': 11.4489, 'acc': 0.625}
-[pneumonia] 15: {'mean_local_loss': 0.34385883808135986, 'ce': 11.44886302947998, 'acc': 0.625}
-[pneumonia] 16: {'mean_local_loss': 0.2902531087398529}
-[pneumonia] 17: {'mean_local_loss': 0.20243508219718934}
-[pneumonia] 18: {'mean_local_loss': 0.200952011346817}
-[pneumonia] 19: {'mean_local_loss': 0.2537811160087585}
-[pneumonia] eval: {'ce': 22.8935, 'acc': 0.625}
-[pneumonia] 20: {'mean_local_loss': 0.38239799737930297, 'ce': 22.893545150756836, 'acc': 0.625}
-[pneumonia] 21: {'mean_local_loss': 0.3747660756111145}
-[pneumonia] 22: {'mean_local_loss': 0.6543937206268311}
-[pneumonia] 23: {'mean_local_loss': 0.2063986301422119}
-[pneumonia] 24: {'mean_local_loss': 0.3111772119998932}
-[pneumonia] eval: {'ce': 27.8999, 'acc': 0.625}
-[pneumonia] 25: {'mean_local_loss': 0.2567679286003113, 'ce': 27.89990234375, 'acc': 0.625}
-[pneumonia] 26: {'mean_local_loss': 0.3555763363838196}
-[pneumonia] 27: {'mean_local_loss': 0.19306352734565735}
-[pneumonia] 28: {'mean_local_loss': 0.2778140664100647}
-[pneumonia] 29: {'mean_local_loss': 0.18047050833702089}
-[pneumonia] eval: {'ce': 13.7983, 'acc': 0.625}
-[pneumonia] 30: {'mean_local_loss': 0.23364141583442688, 'ce': 13.798269271850586, 'acc': 0.625}
-[retrain] full FedAvg on retained clients ...
-[pneumonia] 1: {'mean_local_loss': 0.47096630930900574}
-[pneumonia] 2: {'mean_local_loss': 1.2674603462219238}
-[pneumonia] 3: {'mean_local_loss': 0.6207683682441711}
-[pneumonia] 4: {'mean_local_loss': 0.22875361144542694}
-[pneumonia] retrain: {'ce': 18.513, 'acc': 0.625}
-[pneumonia] 5: {'mean_local_loss': 0.8119142055511475, 'ce': 18.512954711914062, 'acc': 0.625}
-[pneumonia] 6: {'mean_local_loss': 0.3601234555244446}
-[pneumonia] 7: {'mean_local_loss': 0.2785120904445648}
-[pneumonia] 8: {'mean_local_loss': 0.5139322280883789}
-[pneumonia] 9: {'mean_local_loss': 0.15437312424182892}
-[pneumonia] retrain: {'ce': 15.2499, 'acc': 0.625}
-[pneumonia] 10: {'mean_local_loss': 0.22566911578178406, 'ce': 15.249923706054688, 'acc': 0.625}
-[pneumonia] 11: {'mean_local_loss': 0.23024339973926544}
-[pneumonia] 12: {'mean_local_loss': 0.28757524490356445}
-[pneumonia] 13: {'mean_local_loss': 0.4576290547847748}
-[pneumonia] 14: {'mean_local_loss': 0.14248618483543396}
-[pneumonia] retrain: {'ce': 17.8106, 'acc': 0.625}
-[pneumonia] 15: {'mean_local_loss': 0.176924929022789, 'ce': 17.810556411743164, 'acc': 0.625}
-[pneumonia] 16: {'mean_local_loss': 0.5386576652526855}
-[pneumonia] 17: {'mean_local_loss': 0.16961650550365448}
-[pneumonia] 18: {'mean_local_loss': 0.20338594913482666}
-[pneumonia] 19: {'mean_local_loss': 0.19419679045677185}
-[pneumonia] retrain: {'ce': 13.5827, 'acc': 0.625}
-[pneumonia] 20: {'mean_local_loss': 0.20374973118305206, 'ce': 13.582744598388672, 'acc': 0.625}
-[pneumonia] 21: {'mean_local_loss': 0.34224042296409607}
-[pneumonia] 22: {'mean_local_loss': 0.11954252421855927}
-[pneumonia] 23: {'mean_local_loss': 0.49543794989585876}
-[pneumonia] 24: {'mean_local_loss': 0.11665084958076477}
-[pneumonia] retrain: {'ce': 18.1198, 'acc': 0.625}
-[pneumonia] 25: {'mean_local_loss': 0.3551993668079376, 'ce': 18.11981773376465, 'acc': 0.625}
-[pneumonia] 26: {'mean_local_loss': 0.13133542239665985}
-[pneumonia] 27: {'mean_local_loss': 0.23369015753269196}
-[pneumonia] 28: {'mean_local_loss': 0.12985759973526}
-[pneumonia] 29: {'mean_local_loss': 0.15831603109836578}
-[pneumonia] retrain: {'ce': 14.6043, 'acc': 0.625}
-[pneumonia] 30: {'mean_local_loss': 0.12247451394796371, 'ce': 14.604254722595215, 'acc': 0.625}
-[finetune] warm-start, few rounds on retained ...
-[pneumonia] 1: {'mean_local_loss': 0.12035996466875076}
-[pneumonia] 2: {'mean_local_loss': 0.12018124759197235}
-[pneumonia] 3: {'mean_local_loss': 0.12926629185676575}
-[pneumonia] 4: {'mean_local_loss': 0.10953675210475922}
-[pneumonia] 5: {'mean_local_loss': 0.11862289160490036}
-[pneumonia] 6: {'mean_local_loss': 0.11056019365787506}
-[pneumonia] 7: {'mean_local_loss': 0.12040869891643524}
-[pneumonia] finetune: {'ce': 14.3112, 'acc': 0.625}
-[pneumonia] 8: {'mean_local_loss': 0.12794023752212524, 'ce': 14.311247825622559, 'acc': 0.625}
-[head_only_kaf] prior + forget on the removed client's held-out ...
-[pneumonia] kaf_epoch_1: {'l2': 0.0003053654218092561, 'neg_ce_forget': -65.31077575683594}
-[pneumonia] kaf_epoch_2: {'l2': 0.0019045869121327996, 'neg_ce_forget': -111.71897888183594}
-[pneumonia] kaf_epoch_3: {'l2': 0.00489144679158926, 'neg_ce_forget': -161.8190460205078}
-[pneumonia] kaf_epoch_4: {'l2': 0.009280777536332607, 'neg_ce_forget': -203.53030395507812}
-[pneumonia] kaf_epoch_5: {'l2': 0.01504179835319519, 'neg_ce_forget': -251.4875030517578}
-[pneumonia] kaf_epoch_6: {'l2': 0.02217373251914978, 'neg_ce_forget': -302.3428649902344}
-[pneumonia] kaf_epoch_7: {'l2': 0.030738236382603645, 'neg_ce_forget': -344.80224609375}
-[pneumonia] kaf_epoch_8: {'l2': 0.040654998272657394, 'neg_ce_forget': -391.673828125}
-[pneumonia] 1: {'mean_local_loss': 2.10436749458313}
-[pneumonia] 2: {'mean_local_loss': 1.2882264852523804}
-[pneumonia] kaf: {'ce': 65.3293, 'acc': 0.625}
-[pneumonia] 3: {'mean_local_loss': 1.0305160284042358, 'ce': 65.32929229736328, 'acc': 0.625}
-  0%|          | 0.00/206M [00:00<?, ?B/s]  0%|          | 32.8k/206M [00:00<1:38:27, 34.8kB/s]  0%|          | 65.5k/206M [00:02<2:15:03, 25.4kB/s]  0%|          | 98.3k/206M [00:03<1:47:33, 31.8kB/s]  0%|          | 131k/206M [00:03<1:30:25, 37.9kB/s]   0%|          | 164k/206M [00:04<1:16:56, 44.5kB/s]  0%|          | 197k/206M [00:04<1:05:34, 52.2kB/s]  0%|          | 229k/206M [00:05<54:36, 62.7kB/s]    0%|          | 262k/206M [00:05<50:44, 67.5kB/s]  0%|          | 295k/206M [00:05<45:00, 76.0kB/s]  0%|          | 328k/206M [00:05<37:44, 90.6kB/s]  0%|          | 360k/206M [00:06<32:48, 104kB/s]   0%|          | 393k/206M [00:06<29:17, 117kB/s]  0%|          | 426k/206M [00:07<1:02:21, 54.8kB/s]  0%|          | 459k/206M [00:10<2:04:10, 27.5kB/s]  0%|          | 492k/206M [00:10<1:47:14, 31.9kB/s]  0%|          | 524k/206M [00:11<1:36:22, 35.5kB/s]  0%|          | 557k/206M [00:12<1:23:19, 41.0kB/s]  0%|          | 590k/206M [00:12<1:11:21, 47.9kB/s]  0%|          | 623k/206M [00:12<59:27, 57.5kB/s]    0%|          | 655k/206M [00:13<51:10, 66.8kB/s]  0%|          | 688k/206M [00:13<45:16, 75.4kB/s]  0%|          | 721k/206M [00:13<35:12, 97.0kB/s]  0%|          | 754k/206M [00:13<31:00, 110kB/s]   0%|          | 786k/206M [00:13<24:57, 137kB/s]  0%|          | 819k/206M [00:14<23:42, 144kB/s]  0%|          | 885k/206M [00:14<17:46, 192kB/s]  0%|          | 918k/206M [00:14<16:01, 213kB/s]  0%|          | 950k/206M [00:14<14:34, 234kB/s]  0%|          | 983k/206M [00:15<42:15, 80.7kB/s]  0%|          | 1.02M/206M [00:16<57:15, 59.6kB/s]  1%|          | 1.05M/206M [00:16<50:02, 68.1kB/s]  1%|          | 1.08M/206M [00:18<1:21:52, 41.6kB/s]  1%|          | 1.11M/206M [00:20<1:54:29, 29.8kB/s]  1%|          | 1.15M/206M [00:21<1:48:31, 31.4kB/s]  1%|          | 1.18M/206M [00:21<1:35:15, 35.8kB/s]  1%|          | 1.21M/206M [00:22<1:19:41, 42.7kB/s]  1%|          | 1.25M/206M [00:22<1:08:29, 49.7kB/s]  1%|          | 1.28M/206M [00:22<57:37, 59.1kB/s]    1%|          | 1.31M/206M [00:23<46:50, 72.7kB/s]  1%|          | 1.34M/206M [00:23<42:19, 80.4kB/s]  1%|          | 1.38M/206M [00:23<32:54, 103kB/s]   1%|          | 1.41M/206M [00:23<29:23, 116kB/s]  1%|          | 1.44M/206M [00:23<24:30, 139kB/s]  1%|          | 1.51M/206M [00:24<19:56, 171kB/s]  1%|          | 1.57M/206M [00:24<16:27, 207kB/s]  1%|          | 1.64M/206M [00:24<14:06, 241kB/s]  1%|          | 1.70M/206M [00:24<11:19, 300kB/s]  1%|          | 1.77M/206M [00:24<11:02, 308kB/s]  1%|          | 1.84M/206M [00:25<10:53, 312kB/s]  1%|          | 1.93M/206M [00:25<09:15, 366kB/s]  1%|          | 2.03M/206M [00:25<08:29, 400kB/s]  1%|          | 2.10M/206M [00:27<29:38, 114kB/s]  1%|          | 2.13M/206M [00:28<46:22, 73.1kB/s]  1%|          | 2.16M/206M [00:29<55:17, 61.3kB/s]  1%|          | 2.20M/206M [00:29<50:45, 66.8kB/s]  1%|          | 2.23M/206M [00:30<46:09, 73.4kB/s]  1%|          | 2.26M/206M [00:30<40:17, 84.1kB/s]  1%|          | 2.29M/206M [00:30<35:49, 94.6kB/s]  1%|          | 2.33M/206M [00:30<32:11, 105kB/s]   1%|          | 2.36M/206M [00:30<28:12, 120kB/s]  1%|          | 2.39M/206M [00:31<28:47, 118kB/s]  1%|          | 2.42M/206M [00:31<24:03, 141kB/s]  1%|          | 2.46M/206M [00:31<22:50, 148kB/s]  1%|          | 2.49M/206M [00:31<22:11, 153kB/s]  1%|          | 2.52M/206M [00:31<21:53, 155kB/s]  1%|          | 2.56M/206M [00:31<19:00, 178kB/s]  1%|▏         | 2.59M/206M [00:32<19:20, 175kB/s]  1%|▏         | 2.62M/206M [00:32<19:42, 172kB/s]  1%|▏         | 2.65M/206M [00:32<17:03, 198kB/s]  1%|▏         | 2.69M/206M [00:32<15:20, 220kB/s]  1%|▏         | 2.72M/206M [00:32<16:57, 199kB/s]  1%|▏         | 2.79M/206M [00:33<14:07, 239kB/s]  1%|▏         | 2.85M/206M [00:33<14:31, 233kB/s]  1%|▏         | 2.92M/206M [00:33<13:05, 258kB/s]  1%|▏         | 2.95M/206M [00:33<12:36, 268kB/s]  1%|▏         | 3.01M/206M [00:33<10:22, 326kB/s]  1%|▏         | 3.08M/206M [00:33<10:08, 333kB/s]  2%|▏         | 3.15M/206M [00:34<10:19, 327kB/s]  2%|▏         | 3.21M/206M [00:34<10:12, 331kB/s]  2%|▏         | 3.28M/206M [00:34<09:03, 372kB/s]  2%|▏         | 3.34M/206M [00:34<09:18, 362kB/s]  2%|▏         | 3.44M/206M [00:34<08:16, 407kB/s]  2%|▏         | 3.54M/206M [00:35<07:46, 433kB/s]  2%|▏         | 3.60M/206M [00:35<08:29, 396kB/s]  2%|▏         | 3.70M/206M [00:35<07:56, 424kB/s]  2%|▏         | 3.83M/206M [00:35<05:48, 579kB/s]  2%|▏         | 3.93M/206M [00:39<43:08, 77.9kB/s]

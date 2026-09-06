@@ -19,6 +19,9 @@ venv/
 # Notebook cruft
 .ipynb_checkpoints/
 
+# Live run log
+experiments/run_log.txt
+
 # OS
 .DS_Store
 
