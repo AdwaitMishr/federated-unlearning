@@ -28,7 +28,8 @@ def finetune(
         client_data, n_classes,
         num_rounds=extra_rounds, local_epochs=fc["local_epochs"],
         clients_per_round=fc["clients_per_round"], batch_size=fc["batch_size"],
-        lr=fc["lr"], seed=seed, device=device,
+        lr=fc["lr"], weight_decay=fc.get("weight_decay", 0.0), optimizer=fc.get("optimizer", "adam"),
+        seed=seed, device=device,
         init_head_state=baseline_head_state,
         log_fn=log_fn, eval_every=extra_rounds, eval_fn=eval_fn, client_ids=retained,
     )

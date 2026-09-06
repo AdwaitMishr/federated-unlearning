@@ -86,6 +86,19 @@ def run_dataset(dataset: str, cfg: dict | None = None, quiet: bool = False):
     X_test = torch.from_numpy(feats_test).float()
     y_test = torch.from_numpy(test_labels[test_idx]).long()
 
+    # Standardise the 512-d features using global client-train statistics.
+    # The frozen backbone's features are large-magnitude (~hundreds); a linear
+    # head directly on them is over-confident and collapses under FedAvg's
+    # weight averaging across skewed clients. Z-scoring stabilises the head
+    # and is documented in README (Known issues).
+    all_train = torch.cat([X for X, _ in client_data], dim=0)
+    mu = all_train.mean(dim=0, keepdim=True)
+    sd = all_train.std(dim=0, unbiased=False, keepdim=True) + 1e-8
+    scale = lambda t: (t - mu) / sd
+    client_data = [(scale(X), y) for X, y in client_data]
+    client_val = [(scale(X), y) for X, y in client_val]
+    X_test = scale(X_test)
+
     head_params = head_params_count(build_head(n_classes, seed=seed))
 
     def eval_fn(head_state: dict, tag: str = "eval"):
@@ -100,7 +113,8 @@ def run_dataset(dataset: str, cfg: dict | None = None, quiet: bool = False):
         client_data, n_classes,
         num_rounds=fc["num_rounds"], local_epochs=fc["local_epochs"],
         clients_per_round=fc["clients_per_round"], batch_size=fc["batch_size"],
-        lr=fc["lr"], seed=seed, device=device,
+        lr=fc["lr"], weight_decay=fc.get("weight_decay", 0.0), optimizer=fc.get("optimizer", "adam"),
+        seed=seed, device=device,
         log_fn=log, eval_every=cfg["eval"]["log_every"], eval_fn=eval_fn,
     )
     base_train_time = time.time() - t0
@@ -108,20 +122,43 @@ def run_dataset(dataset: str, cfg: dict | None = None, quiet: bool = False):
 
     # ===================== UNLEARNING =====================================
     mX_mem, my_mem = client_data[rem]
-    mX_non, my_non = client_val[rem]
+    rem_val_X, rem_val_y = client_val[rem]      # removed client's held-out (KAF target + probe)
+
+    # Class-matched NON-members for MIA.  Sampling the removed client's train
+    # tuples (members) vs its local-val tuples (non-members) has a class/
+    # covariate confound that makes AUROC ~constant and uninformative (seen in
+    # a first run: retrain AUROC == baseline AUROC).  Instead, non-members are
+    # drawn from the GLOBAL TEST set, matched to the members' class counts, so
+    # the only signal left is genuine training-membership.  See README,
+    # "Known issues / challenges".
+    from collections import Counter
+    rem_class_cnt = Counter(my_mem.tolist())
+    g = torch.Generator().manual_seed(seed)
+    nm_idx = []
+    for c, nc in rem_class_cnt.items():
+        cand = (y_test == c).nonzero().flatten()
+        if len(cand) == 0:
+            continue
+        k = min(int(nc), len(cand))
+        nm_idx.append(cand[torch.randperm(len(cand), generator=g)[:k]])
+    nm_idx = torch.cat(nm_idx) if nm_idx else torch.tensor([], dtype=torch.long)
+    nm_X = X_test[nm_idx]
+    nm_y = y_test[nm_idx]
+
     retained = [k for k in range(N) if k != rem]
 
     methods = {}
     results = []
 
-    def score(head, n_rounds, n_clients_used, unlearn_time):
-        auroc = mia_auroc(base_head if head is base_head else head, mX_mem, my_mem,
-                          mX_non, my_non, n_classes, test_fraction=mc["test_fraction"],
+    def score(head, n_rounds, n_clients_used, unlearn_time, use_nm: tuple | None = None):
+        non_x, non_y = use_nm if use_nm is not None else (nm_X, nm_y)
+        auroc = mia_auroc(head if head is not None else base_head, mX_mem, my_mem,
+                          non_x, non_y, n_classes, test_fraction=mc["test_fraction"],
                           seed=seed)
         f1 = weighted_f1(head, X_test, y_test, n_classes)
-        probe = deleted_client_probe(head, mX_non, my_non, n_classes)
+        probe = deleted_client_probe(head, rem_val_X, rem_val_y, n_classes)
         comm = communication_bytes_proxy(n_rounds, n_clients_used, head_params)
-        return {"mia_auroc": auroc, "f1": f1, "probe_acc": probe["accuracy"],
+        return {"mia_auroc": auroc, "retained_f1": f1, "probe_acc": probe["accuracy"],
                 "n_rounds": n_rounds, "comm_bytes": comm, "unlearn_time_s": unlearn_time}
 
     # 0) Baseline (all clients, no removal) — reference point
@@ -154,7 +191,7 @@ def run_dataset(dataset: str, cfg: dict | None = None, quiet: bool = False):
     print("[head_only_kaf] prior + forget on the removed client's held-out ...")
     t0 = time.time()
     khead, kstat = head_only_kaf(
-        client_data, rem, n_classes, base_head, mX_non, my_non,
+        client_data, rem, n_classes, base_head, rem_val_X, rem_val_y,
         cfg["head_only_kaf"], fc, seed, device=device,
         log_fn=log, eval_fn=lambda hs: eval_fn(hs, "kaf"),
     )

@@ -27,12 +27,13 @@ data:
 
 # ---- FedAvg baseline ------------------------------------------------
 fedavg:
-  num_rounds: 30
-  local_epochs: 3
+  num_rounds: 40
+  local_epochs: 1
   clients_per_round: 5      # all clients each round (N is small)
   batch_size: 64
   optimizer: adam
-  lr: 0.001
+  lr: 0.0005
+  weight_decay: 0.0005      # controls head-magnitude blow-up under non-IID drift
 
 # ---- Unlearning methods ----------------------------------------------
 finetune:

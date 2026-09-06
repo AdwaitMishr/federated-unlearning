@@ -17,6 +17,8 @@ def train_head_local(
     lr: float,
     seed: int,
     device: str = "cpu",
+    weight_decay: float = 0.0,
+    optimizer: str = "adam",
 ) -> dict:
     """Train a classifier head for ``epochs`` epochs on local (feature,label) tuples.
 
@@ -28,7 +30,10 @@ def train_head_local(
     head.load_state_dict(head_state)
     head.train()
 
-    opt = torch.optim.Adam(head.parameters(), lr=lr)
+    if optimizer.lower() == "sgd":
+        opt = torch.optim.SGD(head.parameters(), lr=lr, momentum=0.9, weight_decay=weight_decay)
+    else:
+        opt = torch.optim.Adam(head.parameters(), lr=lr, weight_decay=weight_decay)
     crit = nn.CrossEntropyLoss()
 
     rng = torch.Generator().manual_seed(seed)

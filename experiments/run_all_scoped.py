@@ -91,10 +91,8 @@ def _make_plots(df: pd.DataFrame, out: Path) -> None:
         sub = df[(df.dataset == ds) & (df.method.isin(methods))]
         for _, r in sub.iterrows():
             ax.scatter(r["mia_auroc"], r["retained_f1"], s=90,
-                       color=palette[r["method"]], edgecolor="k", linewidth=0.5,
-                       label=(None if (ds, r["method"]) != (datasets[0], methods[0]) else
-                              f"{r['method']} [{ds}]"), zorder=3)
-            ax.annotate(f"{r['method'][:7]}\n{d.upper()}", (r["mia_auroc"], r["retained_f1"]),
+                       color=palette[r["method"]], edgecolor="k", linewidth=0.5, zorder=3)
+            ax.annotate(f"{r['method'][:7]}\n{ds.upper()}", (r["mia_auroc"], r["retained_f1"]),
                         textcoords="offset points", xytext=(6, 6), fontsize=8)
     ax.axvline(0.5, color="#999", ls="--", lw=0.8)
     ax.set_xlabel("MIA AUROC  (lower = better forgetting)")

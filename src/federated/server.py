@@ -27,6 +27,8 @@ def fedavg_fit(
     lr: float,
     seed: int,
     device: str = "cpu",
+    weight_decay: float = 0.0,
+    optimizer: str = "adam",
     init_head_state: Optional[dict] = None,
     log_fn: Callable[[int, dict], None] | None = None,
     eval_every: int = 5,
@@ -63,6 +65,7 @@ def fedavg_fit(
                 head_state, X_k, y_k, n_classes,
                 epochs=local_epochs, batch_size=batch_size, lr=lr,
                 seed=int(rng.integers(0, 2**31)), device=device,
+                weight_decay=weight_decay, optimizer=optimizer,
             )
             updates.append((k, new_state))
             losses.append(float(torch.nn.functional.cross_entropy(

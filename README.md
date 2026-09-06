@@ -118,17 +118,35 @@ This section documents real difficulties encountered while building the pipeline
    medical-imaging backbone.
 3. **Head-only SGD under trains with too few FedAvg rounds.** A 2-round smoke test
    plateaued at the majority class (~0.625); features are fine (linear probe 0.82)
-   but the head needs enough rounds/epochs to leave the majority. Section 5 uses
-   30 rounds × 3 local epochs, which converges.
-4. **MIA AUROC is noisy on small removed-client pools.** The removed client's
-   training/validation pools can be a few hundred tuples; attack AUROC varies a lot
-   with the split. We fix the attacker seed and stratify the split, and always read
-   AUROC relative to the Retrain baseline rather than as an absolute.
-5. **PathMNIST is too heavy for laptop CPU at full scale (~90k tuples).** We cap
+   but a head needs enough rounds, and — critically — well-conditioned inputs.
+   Combined with feature standardisation (next item) and 40 FedAvg rounds it
+   converges to ~0.84 F1.
+4. **The frozen ResNet-512 features are large-magnitude.**  Empirical logits were
+   routinely in the tens with a small-norm head — a linear classifier on such
+   inputs is over-confident and, under FedAvg's weight averaging across skewed
+   clients, collapses to the majority class (a run with no normalisation
+   reached ~0.62 test F1 [majority]).  We **z-score the features** using global
+   client-train statistics before any head training; F1 then converges to ~0.84.
+5. **MIA AUROC is at chance (~0.50) for every method — including the baseline.**
+   The frozen-backbone + linear-head model is too low-capacity to memorise
+   individual training tuples, so membership is not detectable and the attack
+   finds nothing to "forget" for the baseline itself.  This is itself a
+   finding, but it means MIA is **not** the discriminating metric here.
+   We therefore report MIA (honestly ~0.5) AND the **deleted-client probe**
+   (residual accuracy on the removed client's held-out tuples), which does
+   discriminate: Head-only KAF reduces it (~0.88) below baseline/retrain/
+   fine-tune (~0.92–0.93) at a fraction of the cost.
+6. **MIA member/non-member pools must be class-matched.**  A first MIA version
+   compared the removed client's TRAIN tuples against its own LOCAL-VAL tuples;
+   the class/covariate shift between them gave an AUROC that was constant
+   across methods.  Non-members are now sampled from the GLOBAL TEST set,
+   matched to the members' class counts, leaving only genuine training-membership
+   as a possible signal.
+7. **PathMNIST is too heavy for laptop CPU at full scale (~90k tuples).** We cap
    each client's training allocation (`path_train_cap_per_client: 3000` in config,
    documented) so the demo stays CPU-feasible. Disable the cap (null) only with a
    GPU. This is a *deliberate scope-time trade-off*, not a silent omission.
-6. **Frozen-backbone feature caching.** Features are cached to `.cache/` once per
+8. **Frozen-backbone feature caching.** Features are cached to `.cache/` once per
    tuple set. The cache is keyed on the partition + dataset, so re-running with the
    same seed is fast. `.cache/` is gitignored.
 
